@@ -16,9 +16,8 @@ public class StuffController {
         return StuffService.getStuffs();
     }
 
-    @RequestMapping(value="/pet")
-    public String printHello(ModelMap modelMap){
-        modelMap.addAttribute("message", "Hello Spring MVC Framework!");
+    @RequestMapping(value="/pet", method = RequestMethod.GET)
+    public String printHello(){
         System.out.println("Hello");
         return "Hello";
     }

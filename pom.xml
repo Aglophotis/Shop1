@@ -46,12 +46,6 @@
     <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context</artifactId>
-        <exclusions>
-            <exclusion>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-            </exclusion>
-        </exclusions>
         <version>RELEASE</version>
     </dependency>
     <dependency>
@@ -60,25 +54,9 @@
         <version>RELEASE</version>
     </dependency>
     <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>jcl-over-slf4j</artifactId>
-        <version>1.5.6</version>
-    </dependency>
-    <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
         <version>RELEASE</version>
     </dependency>
-    <dependency>
-        <groupId>javax.servlet</groupId>
-        <artifactId>javax.servlet-api</artifactId>
-        <version>RELEASE</version>
-    </dependency>
-    <dependency>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-server</artifactId>
-        <version>RELEASE</version>
-    </dependency>
-
 </dependencies>
 </project>
