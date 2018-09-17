@@ -6,6 +6,13 @@ public class Stuff {
     int count;
     String name;
 
+    Stuff(int id, int price, int count, String name){
+        this.id = id;
+        this.price = price;
+        this.count = count;
+        this.name =  name;
+    }
+
     public int getCount() {
         return count;
     }

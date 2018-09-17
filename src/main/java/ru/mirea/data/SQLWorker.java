@@ -9,7 +9,7 @@ public class SQLWorker {
     private String userName = "root";
     private String password = "xxxx";
     private String dbms = "mysql";
-    private String serverName = "127.0.0.1";
+    private String serverName = "192.168.1.1";
     private String portNumber = "3306";
 
     public Connection getConnection() throws SQLException {
@@ -22,7 +22,7 @@ public class SQLWorker {
             conn = DriverManager.getConnection(
                     "jdbc:" + this.dbms + "://" +
                             this.serverName +
-                            ":" + this.portNumber + "/?verifyServerCertificate=false&useSSL=true",
+                            ":" + this.portNumber + "/",
                     connectionProps);
         } else {
             System.out.println("Unknown database");
