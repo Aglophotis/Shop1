@@ -3,11 +3,7 @@ package ru.mirea.data;
 import java.util.ArrayList;
 
 public class StuffService {
-    static ArrayList<Stuff> stuffs;
-
-    public static void main(String[] args){
-        stuffs = createStuffsList();
-    }
+    private static ArrayList<Stuff> stuffs;
 
     public static ArrayList<Stuff> getStuffs(){
         return stuffs;
@@ -17,7 +13,7 @@ public class StuffService {
         return;
     }
 
-    private static ArrayList<Stuff> createStuffsList(){
+    public static ArrayList<Stuff> createStuffsList(){
         ArrayList<Stuff> stuffs = new ArrayList<>();
         stuffs.add(new Stuff(0, 100, 4, "Ball"));
         stuffs.add(new Stuff(1, 70, 20, "Milk"));
