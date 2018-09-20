@@ -14,20 +14,7 @@ public class StuffController {
     @RequestMapping(value = "/stuff", method = RequestMethod.GET)
     @ResponseBody
     public ObjectNode stuffs(){
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode stuffsArray = mapper.createArrayNode();
-        for (int i = 0; i < StuffService.getStuffs().size(); i++){
-            Stuff item = StuffService.getStuffs().get(i);
-            ObjectNode stuff = mapper.createObjectNode();
-            stuff.put("id", item.getId());
-            stuff.put("name", item.getName());
-            stuff.put("price", item.getPrice());
-            stuff.put("count", item.getCount());
-            stuffsArray.add(stuff);
-        }
-        ObjectNode objectNode = mapper.createObjectNode();
-        objectNode.putPOJO("stuffs", stuffsArray);
-        return objectNode;
+        return StuffService.getStuffs();
     }
 
     @RequestMapping(value = "/cart/currency/balance", method = RequestMethod.POST)
@@ -39,17 +26,7 @@ public class StuffController {
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     @ResponseBody
     public ObjectNode cart(){
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode stuffsArray = mapper.createArrayNode();
-        for (Integer item : StuffService.getCart().keySet()){
-            ObjectNode stuff = mapper.createObjectNode();
-            stuff.put("id", item);
-            stuff.put("count", StuffService.getCart().get(item));
-            stuffsArray.add(stuff);
-        }
-        ObjectNode objectNode = mapper.createObjectNode();
-        objectNode.putPOJO("cart", stuffsArray);
-        return objectNode;
+        return StuffService.getCart();
     }
 
     @RequestMapping(value="/cart/stuff/{id}", method=RequestMethod.DELETE)

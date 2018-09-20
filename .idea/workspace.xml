@@ -5,6 +5,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ru/mirea/data/SQLWorker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/mirea/data/SQLWorker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/mirea/data/SpringServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/mirea/data/SpringServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/mirea/data/StuffController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/mirea/data/StuffController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/mirea/data/StuffService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/mirea/data/StuffService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -58,41 +62,45 @@
     <session id="-348089030">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="12" />
+          <entry key="project.closed" value="15" />
           <entry key="project.open.time.104" value="1" />
           <entry key="project.open.time.111" value="1" />
           <entry key="project.open.time.132" value="1" />
           <entry key="project.open.time.135" value="1" />
           <entry key="project.open.time.138" value="1" />
+          <entry key="project.open.time.169" value="1" />
           <entry key="project.open.time.19" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.21" value="1" />
           <entry key="project.open.time.23" value="1" />
+          <entry key="project.open.time.28" value="1" />
           <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.89" value="1" />
           <entry key="project.open.time.97" value="1" />
-          <entry key="project.opened" value="13" />
+          <entry key="project.opened" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="13" />
-          <entry key="java" value="915" />
+          <entry key="java" value="2720" />
           <entry key="jsp" value="2" />
-          <entry key="xml" value="346" />
+          <entry key="xml" value="389" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="915" />
+          <entry key="JAVA" value="2720" />
           <entry key="JSP" value="2" />
           <entry key="PLAIN_TEXT" value="13" />
-          <entry key="XML" value="346" />
+          <entry key="XML" value="389" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="class" value="1" />
           <entry key="css" value="2" />
           <entry key="gradle" value="1" />
           <entry key="java" value="10" />
@@ -103,6 +111,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key="CLASS" value="1" />
           <entry key="CSS" value="2" />
           <entry key="Groovy" value="1" />
           <entry key="JAVA" value="10" />
@@ -118,8 +127,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="33" column="14" lean-forward="true" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
+            <state relative-caret-position="73">
+              <caret line="10" column="12" lean-forward="true" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot/2.0.5.RELEASE/spring-boot-2.0.5.RELEASE.jar!/org/springframework/boot/SpringApplication.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="486" selection-start-line="486" selection-end-line="486" />
             </state>
           </provider>
         </entry>
@@ -127,11 +145,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/StuffController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+            <state relative-caret-position="272">
+              <caret line="28" column="38" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
               <folding>
-                <element signature="e#1435#1436#0" expanded="true" />
-                <element signature="e#1483#1484#0" expanded="true" />
+                <element signature="e#640#641#0" expanded="true" />
+                <element signature="e#687#688#0" expanded="true" />
+                <element signature="e#976#977#0" expanded="true" />
+                <element signature="e#1021#1022#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -140,8 +160,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/Stuff.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+            <state relative-caret-position="357">
+              <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -149,17 +169,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/StuffService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/SpringServer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+            <state relative-caret-position="150">
+              <caret line="27" column="58" selection-start-line="27" selection-start-column="58" selection-end-line="27" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -168,10 +179,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/SpringServer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/SQLWorker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="49" column="33" lean-forward="true" selection-start-line="49" selection-start-column="33" selection-end-line="49" selection-end-column="33" />
+            <state relative-caret-position="731">
+              <caret line="47" column="52" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -210,12 +233,12 @@
         <option value="$PROJECT_DIR$/src/main/java/ru/mirea/data/server/JettyHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/mirea/data/JettyHandler.java" />
         <option value="$PROJECT_DIR$/src/main/WebContent/WEB-INF/web.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/mirea/data/SpringServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/mirea/data/Stuff.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/mirea/data/SpringServer.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/mirea/data/StuffController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ru/mirea/data/SQLWorker.java" />
         <option value="$PROJECT_DIR$/src/main/java/ru/mirea/data/StuffService.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/ru/mirea/data/SQLWorker.java" />
       </list>
     </option>
   </component>
@@ -248,11 +271,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="17" />
-    <option name="y" value="-15" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="377" />
+    <option name="y" value="281" />
     <option name="width" value="1259" />
-    <option name="height" value="788" />
+    <option name="height" value="893" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -260,6 +283,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -293,18 +317,12 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="shop" type="b2602c69:ProjectViewProjectNode" />
-              <item name="shop" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -314,7 +332,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537362027572" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1537448731902" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../sarafan-RestController" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -335,7 +353,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.SQLWorker">
+  <component name="RunManager" selected="Spring Boot.SpringServer">
     <configuration name="JettyHandler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ru.mirea.data.JettyHandler" />
       <module name="shop" />
@@ -396,8 +414,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SQLWorker" />
         <item itemvalue="Spring Boot.SpringServer" />
+        <item itemvalue="Application.SQLWorker" />
         <item itemvalue="Application.JettyHandler" />
         <item itemvalue="Application.StuffService" />
       </list>
@@ -435,11 +453,14 @@
       <workItem from="1537334668967" duration="6528000" />
       <workItem from="1537351375705" duration="69000" />
       <workItem from="1537360176202" duration="1846000" />
+      <workItem from="1537368854587" duration="12019000" />
+      <workItem from="1537436300029" duration="3377000" />
+      <workItem from="1537440925135" duration="2513000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48727000" />
+    <option name="totallyTimeSpent" value="66636000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -451,9 +472,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="377" y="281" width="1259" height="893" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21255673" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3386155" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -463,18 +484,18 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49918962" weight="0.37076923" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49918962" weight="0.3707165" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32917964" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3271028" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.41447368" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5008104" side_tool="true" weight="0.32712215" />
       <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Spring" order="11" weight="0.32917964" />
       <window_info anchor="bottom" id="Java Enterprise" order="12" weight="0.32923076" />
-      <window_info anchor="bottom" id="Messages" order="13" weight="0.3276923" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.3271028" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -510,52 +531,64 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/JettyHandler.java" />
     <entry file="file://$PROJECT_DIR$/src/main/WebContent/WEB-INF/dispatcherServlet.xml" />
     <entry file="file://$PROJECT_DIR$/src/main/WebContent/WEB-INF/web.xml" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/StuffController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="28" column="38" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
+          <folding>
+            <element signature="e#640#641#0" expanded="true" />
+            <element signature="e#687#688#0" expanded="true" />
+            <element signature="e#976#977#0" expanded="true" />
+            <element signature="e#1021#1022#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/Stuff.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
+        <state relative-caret-position="357">
+          <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/StuffService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/SQLWorker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/SpringServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+        <state relative-caret-position="731">
+          <caret line="47" column="52" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/StuffController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/StuffService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+        <state relative-caret-position="150">
+          <caret line="27" column="58" selection-start-line="27" selection-start-column="58" selection-end-line="27" selection-end-column="58" />
           <folding>
-            <element signature="e#1435#1436#0" expanded="true" />
-            <element signature="e#1483#1484#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="33" column="14" lean-forward="true" selection-start-line="33" selection-start-column="14" selection-end-line="33" selection-end-column="14" />
+        <state relative-caret-position="73">
+          <caret line="10" column="12" lean-forward="true" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/SQLWorker.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot/2.0.5.RELEASE/spring-boot-2.0.5.RELEASE.jar!/org/springframework/boot/SpringApplication.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="49" column="33" lean-forward="true" selection-start-line="49" selection-start-column="33" selection-end-line="49" selection-end-column="33" />
+        <state relative-caret-position="200">
+          <caret line="486" selection-start-line="486" selection-end-line="486" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ru/mirea/data/SpringServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
