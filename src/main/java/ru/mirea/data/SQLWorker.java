@@ -3,14 +3,18 @@ package ru.mirea.data;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.sql.*;
 
+@Component
 public class SQLWorker {
     private final String driverName = "org.sqlite.JDBC";
-    private final String connectionString = "jdbc:sqlite:C:\\DB\\stuffs.db";
+    private final String connectionString = "jdbc:sqlite:~/stuffs.db";
     private Connection conn;
 
+    @PostConstruct
     public void run(){
         try {
             Class.forName(driverName);

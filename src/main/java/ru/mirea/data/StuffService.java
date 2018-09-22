@@ -5,18 +5,23 @@ package ru.mirea.data;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
+@Service
 public class StuffService {
-    private static HashMap<Integer, Integer> cart = new HashMap<>();
-    private static SQLWorker sqlWorker;
+    private  HashMap<Integer, Integer> cart = new HashMap<>();
 
-    public static ObjectNode getStuffs(){
+    @Autowired
+    private  SQLWorker sqlWorker;
+
+    public ObjectNode getStuffs(){
         return sqlWorker.selectAll();
     }
 
-    public static ObjectNode getCart(){
+    public ObjectNode getCart(){
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode stuffsArray = mapper.createArrayNode();
         for (Integer id : cart.keySet()){
@@ -30,7 +35,7 @@ public class StuffService {
         return objectNode;
     }
 
-    public static String payTheCart(){
+    public  String payTheCart(){
         try{
             if (cart.isEmpty()) return "Cart is empty";
             for (Integer id : cart.keySet()){
@@ -48,7 +53,7 @@ public class StuffService {
         return "Payment was successful";
     }
 
-    public static String deleteStuffFromCart(int id){
+    public  String deleteStuffFromCart(int id){
         try {
             if (cart.get(id) > 1)
                 cart.put(id, cart.get(id) - 1);
@@ -60,7 +65,7 @@ public class StuffService {
         return "Stuff was been deleted from cart";
     }
 
-    public static String putStuffToCart(int id){
+    public String putStuffToCart(int id){
         int count = sqlWorker.selectCount(id);
         if (count == -1) return "Error: id wasn't found";
         if (count == 0) return "The stuffs are over";
@@ -77,7 +82,7 @@ public class StuffService {
     }
 
 
-    public static void openConnToBD(){
+    public void openConnectionToDB(){
         sqlWorker= new SQLWorker();
         sqlWorker.run();
     }
