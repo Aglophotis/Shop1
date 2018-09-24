@@ -22,8 +22,8 @@ public class StuffController {
 
     @RequestMapping(value = "/cart/currency/balance", method = RequestMethod.POST)
     @ResponseBody
-    public String pay(){
-        return stuffService.payTheCart();
+    public String pay() {
+        return stuffService.paymentOfCart();
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)

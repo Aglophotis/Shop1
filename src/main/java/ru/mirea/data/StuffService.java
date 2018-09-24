@@ -1,89 +1,90 @@
 package ru.mirea.data;
 
-
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 @Service
 public class StuffService {
-    private  HashMap<Integer, Integer> cart = new HashMap<>();
 
-    @Autowired
-    private  SQLWorker sqlWorker;
+    private SQLHelper sqlHelper = new SQLHelper();
 
     public ObjectNode getStuffs(){
-        return sqlWorker.selectAll();
+        return sqlHelper.selectAllFromStuffs();
     }
 
     public ObjectNode getCart(){
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode stuffsArray = mapper.createArrayNode();
-        for (Integer id : cart.keySet()){
-            ObjectNode stuff = mapper.createObjectNode();
-            stuff.put("id", id);
-            stuff.put("count", cart.get(id));
-            stuffsArray.add(stuff);
-        }
-        ObjectNode objectNode = mapper.createObjectNode();
-        objectNode.putPOJO("cart", stuffsArray);
-        return objectNode;
+        return sqlHelper.selectAllFromCart();
     }
 
-    public  String payTheCart(){
-        try{
-            if (cart.isEmpty()) return "Cart is empty";
-            for (Integer id : cart.keySet()){
-                int count = sqlWorker.selectCount(id);
-                int cartCount = cart.get(id);
-                if (cartCount > count)
-                    return "Unfortunately, while you were buying, part of the stuffs were sold out";
-                if (sqlWorker.updateCount(id, count - cartCount) == -1)
-                    return "Error: the connection to the database was broken";
+    public String paymentOfCart(){
+        if (!sqlHelper.isExistenceOfTable("cart")){
+            return "Error: cart is empty";
+        }
+        ArrayList<Integer> uniqItemId = sqlHelper.selectDistinctItemIDFromCart();
+        int paymentAmount = 0;
+        if (uniqItemId.isEmpty()){
+            return "Error: cart is empty";
+        }
+        for (int id : uniqItemId) {
+            int nCountInStuffs = sqlHelper.selectColumnValueFromStuff("count", id);
+            int nCountInCart = sqlHelper.getCountOfRowsFromCart(id);
+            if (nCountInCart > nCountInStuffs) {
+                return "Error: the quantity of the stuffs(" + id + ") has been changed.";
             }
-        } catch (Exception e){
-            return "Unknown error";
+            paymentAmount += nCountInCart * sqlHelper.selectColumnValueFromStuff("price", id);
         }
-        cart.clear();
-        return "Payment was successful";
+        for (int id : uniqItemId) {
+            int nCountInStuffs = sqlHelper.selectColumnValueFromStuff("count", id);
+            int nCountInCart = sqlHelper.getCountOfRowsFromCart(id);
+            if (nCountInCart <= nCountInStuffs) {
+                if (sqlHelper.updateCountInStuffs(id, nCountInStuffs - nCountInCart) == -1){
+                    return "Error: connection problem";
+                }
+            }
+        }
+        sqlHelper.clearTable("cart");
+        return "The payment has been successfully completed";
     }
 
-    public  String deleteStuffFromCart(int id){
-        try {
-            if (cart.get(id) > 1)
-                cart.put(id, cart.get(id) - 1);
-            else
-                cart.remove(id);
-        } catch (NullPointerException e){
-            return "Error: id wasn't found";
+    public String deleteStuffFromCart(int id){
+        int err = sqlHelper.deleteStuffFromCart(id);
+        if (err == -1){
+            return "Error: connection problem";
+        } else if (err == 1){
+            return "The stuff was successfully removed from cart";
+        } else {
+            return "Error: stuff wasn't found in cart";
         }
-        return "Stuff was been deleted from cart";
     }
 
     public String putStuffToCart(int id){
-        int count = sqlWorker.selectCount(id);
-        if (count == -1) return "Error: id wasn't found";
-        if (count == 0) return "The stuffs are over";
-        try{
-            if (cart.get(id) != count)
-                cart.put(id, cart.get(id) + 1);
-            else
-                return "The stuffs are over";
-        } catch (NullPointerException e){
-            cart.put(id, 1);
-            return "Stuff was been added to cart";
+        int nCountInStuffs = sqlHelper.selectColumnValueFromStuff("count", id);
+        if (!sqlHelper.isExistenceOfTable("cart")){
+            if (sqlHelper.createTableOfCart() == -1)
+                return "Error: connection problem";
+        }
+        if (nCountInStuffs == -1) return "Error: id wasn't found";
+        if (nCountInStuffs == 0) return "The stuffs are over";
+        int nCountInCart = sqlHelper.getCountOfRowsFromCart(id);
+        if (nCountInCart < nCountInStuffs){
+            if (sqlHelper.insertIntoCart(id, 1) == -1)
+                return "Error: connection problems";
+        } else {
+            return "The stuffs are over";
         }
         return "Stuff was been added to cart";
     }
 
 
     public void openConnectionToDB(){
-        sqlWorker= new SQLWorker();
-        sqlWorker.run();
+        if (!sqlHelper.isRun())
+            sqlHelper.run();
+    }
+
+    public void closeConnectionToDB(){
+        if (sqlHelper.isRun())
+            sqlHelper.stop();
     }
 }

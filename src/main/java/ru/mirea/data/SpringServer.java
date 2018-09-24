@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 public class SpringServer{
 
     @Autowired
-    private StuffService stuffService;
+    private StuffService stuffService = new StuffService();
 
     @PostConstruct
     public void init(){
