@@ -8,21 +8,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class StuffController {
+public class PetController {
 
     @Autowired
-    private StuffService stuffService;
+    private PetService petService;
 
-    @RequestMapping(value = "/stuff", method = RequestMethod.GET)
+    @RequestMapping(value = "/pet", method = RequestMethod.GET)
     @ResponseBody
-    public ObjectNode stuffs(){
-        return stuffService.getStuffs();
+    public ObjectNode pets(){
+        return petService.getPets();
     }
-
-    @RequestMapping(value = "/cart/currency/balance", method = RequestMethod.POST)
-    @ResponseBody
-    public String pay() {
-        return stuffService.paymentOfCart();
-    }
-
 }

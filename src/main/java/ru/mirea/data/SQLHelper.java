@@ -34,16 +34,19 @@ public class SQLHelper {
         }
         conn = connection;
         isRun = true;
-        if (!isExistenceOfTable("stuffs")){
-            createTableOfStuffs();
-            insertIntoStuffs("Dog-collar", 200, 1);
-            insertIntoStuffs("Ball", 100, 4);
-            insertIntoStuffs("Milk", 150, 20);
-            insertIntoStuffs("Food", 300, 2);
+        if (!isExistenceOfTable("items")){
+            createTableOfItems();
+            insertIntoItems("Dog-collar", "Stuff", 200, 1);
+            insertIntoItems("Ball", "Stuff", 100, 4);
+            insertIntoItems("Cat", "Pet", 5299, 1);
+            insertIntoItems("Milk", "Stuff", 150, 20);
+            insertIntoItems("Rabbit", "Pet", 1000, 100);
+            insertIntoItems("Food", "Stuff", 300, 2);
+            insertIntoItems("Dog", "Pet", 3200, 5);
         }
     }
 
-    public boolean isRun(){
+    public boolean connectionIsRun(){
         return isRun;
     }
 
@@ -60,10 +63,11 @@ public class SQLHelper {
         return true;
     }
 
-    public void createTableOfStuffs(){
+    public void createTableOfItems(){
         try {
-            String sql = "CREATE TABLE IF NOT EXISTS stuffs (\n"
+            String sql = "CREATE TABLE IF NOT EXISTS items (\n"
                     + "	id integer PRIMARY KEY,\n"
+                    + " type text NOT NULL,\n"
                     + "	name text NOT NULL,\n"
                     + "	price integer NOT NULL,\n"
                     + "	count integer NOT NULL\n"
@@ -108,13 +112,14 @@ public class SQLHelper {
         }
     }
 
-    public int insertIntoStuffs(String name, int price, int count) {
-        String sql = "INSERT INTO stuffs(name, price, count) VALUES(?,?,?)";
+    public int insertIntoItems(String name, String type, int price, int count) {
+        String sql = "INSERT INTO items(name, type, price, count) VALUES(?,?,?,?)";
         try (
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
-            pstmt.setInt(2, price);
-            pstmt.setInt(3, count);
+            pstmt.setString(2, type);
+            pstmt.setInt(3, price);
+            pstmt.setInt(4, count);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -137,7 +142,7 @@ public class SQLHelper {
     }
 
     public int selectColumnValueFromStuff(String columnLabel, int id){
-        String sql = "SELECT * FROM stuffs WHERE id = ?";
+        String sql = "SELECT * FROM items WHERE id = ?";
         try (PreparedStatement pstmt  = conn.prepareStatement(sql)){
             pstmt.setInt(1, id);
             ResultSet rs  = pstmt.executeQuery();
@@ -164,8 +169,8 @@ public class SQLHelper {
         }
     }
 
-    public int updateCountInStuffs(int id, int count){
-        String sql = "UPDATE stuffs SET count = ? WHERE id = ?";
+    public int updateCountInItems(int id, int count){
+        String sql = "UPDATE items SET count = ? WHERE id = ?";
         try (PreparedStatement pstmt  = conn.prepareStatement(sql)){
             pstmt.setInt(1, count);
             pstmt.setInt(2, id);
@@ -177,30 +182,54 @@ public class SQLHelper {
         return 1;
     }
 
-    public ObjectNode selectAllFromStuffs(){
-        if (!isExistenceOfTable("stuffs")){
-            createTableOfStuffs();
+    public ObjectNode selectAllFromItems(String type){
+        if (!isExistenceOfTable("items")){
+            createTableOfItems();
         }
-        String sql = "SELECT * FROM stuffs";
+        String sql = "SELECT * FROM items WHERE type = " + type;
         try (PreparedStatement pstmt  = conn.prepareStatement(sql)){
-            ObjectMapper mapper = new ObjectMapper();
-            ArrayNode stuffsArray = mapper.createArrayNode();
             ResultSet rs  = pstmt.executeQuery();
-            while (rs.next()) {
-                ObjectNode stuff = mapper.createObjectNode();
-                stuff.put("id", rs.getInt("id"));
-                stuff.put("name", rs.getString("name"));
-                stuff.put("price", rs.getInt("price"));
-                stuff.put("count", rs.getInt("count"));
-                stuffsArray.add(stuff);
-            }
-            ObjectNode objectNode = mapper.createObjectNode();
-            objectNode.putPOJO("stuffs", stuffsArray);
-            return objectNode;
+            return createJSONForItem(rs);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public ObjectNode selectAllFromItems(){
+        if (!isExistenceOfTable("items")){
+            createTableOfItems();
+        }
+        String sql = "SELECT * FROM items";
+        try (PreparedStatement pstmt  = conn.prepareStatement(sql)){
+            ResultSet rs  = pstmt.executeQuery();
+            return createJSONForItem(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private ObjectNode createJSONForItem(ResultSet rs){
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode itemsArray = mapper.createArrayNode();
+        try{
+            while (rs.next()) {
+            ObjectNode stuff = mapper.createObjectNode();
+            stuff.put("id", rs.getInt("id"));
+            stuff.put("type", rs.getString("type"));
+            stuff.put("name", rs.getString("name"));
+            stuff.put("price", rs.getInt("price"));
+            stuff.put("count", rs.getInt("count"));
+            itemsArray.add(stuff);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+        ObjectNode objectNode = mapper.createObjectNode();
+        objectNode.putPOJO("items", itemsArray);
+        return objectNode;
     }
 
     public int clearTable(String tableName){
@@ -221,17 +250,17 @@ public class SQLHelper {
         String sql = "SELECT * FROM cart";
         try (PreparedStatement pstmt  = conn.prepareStatement(sql)){
             ObjectMapper mapper = new ObjectMapper();
-            ArrayNode stuffsArray = mapper.createArrayNode();
+            ArrayNode itemsArray = mapper.createArrayNode();
             ResultSet rs  = pstmt.executeQuery();
             while (rs.next()) {
                 ObjectNode stuff = mapper.createObjectNode();
                 stuff.put("id", rs.getInt("id"));
                 stuff.put("id_item", rs.getInt("id_item"));
                 stuff.put("id_author", rs.getInt("id_author"));
-                stuffsArray.add(stuff);
+                itemsArray.add(stuff);
             }
             ObjectNode objectNode = mapper.createObjectNode();
-            objectNode.putPOJO("cart", stuffsArray);
+            objectNode.putPOJO("cart", itemsArray);
             return objectNode;
         } catch (SQLException e) {
             e.printStackTrace();

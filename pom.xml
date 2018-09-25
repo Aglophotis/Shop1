@@ -69,10 +69,5 @@
         <artifactId>sqlite-jdbc</artifactId>
         <version>3.23.1</version>
     </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>RELEASE</version>
-    </dependency>
 </dependencies>
 </project>

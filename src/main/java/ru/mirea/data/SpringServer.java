@@ -10,11 +10,11 @@ import javax.annotation.PostConstruct;
 public class SpringServer{
 
     @Autowired
-    private StuffService stuffService = new StuffService();
+    private SQLHelper sqlHelper;
 
     @PostConstruct
     public void init(){
-        stuffService.openConnectionToDB();
+        sqlHelper.run();
     }
 
     public static void main(String[] args) {
