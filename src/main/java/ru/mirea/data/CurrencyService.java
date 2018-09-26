@@ -5,17 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PetService {
+public class CurrencyService {
 
     @Autowired
     private SQLHelper sqlHelper;
 
-    public ObjectNode getPets(){
-        return sqlHelper.selectAllFromItems("Pet");
+    public ObjectNode getCurrencies(){
+        return sqlHelper.selectAllFromCurrency();
     }
 
-    public ObjectNode getPet(int id){
-        return sqlHelper.selectConcreteFromItemsById("Pet", id);
+    public ObjectNode getCurrency(int id){
+        return sqlHelper.selectConcreteFromCurrencyByID(id);
     }
-
 }

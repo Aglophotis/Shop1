@@ -9,21 +9,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class StuffController {
+public class CurrencyController {
 
     @Autowired
-    private StuffService stuffService;
+    private CurrencyService currencyService;
 
-    @RequestMapping(value = "/stuff", method = RequestMethod.GET)
+    @RequestMapping(value = "/currency", method = RequestMethod.GET)
     @ResponseBody
-    public ObjectNode getStuffs(){
-        return stuffService.getStuffs();
+    public ObjectNode getCurrencies(){
+        return currencyService.getCurrencies();
     }
 
-    @RequestMapping(value="/stuff/{id}", method=RequestMethod.GET)
+    @RequestMapping(value="/currency/{id}", method=RequestMethod.GET)
     @ResponseBody
-    public ObjectNode getStuff(@PathVariable("id") int id){
-        return stuffService.getStuff(id);
+    public ObjectNode getCurrency(@PathVariable("id") int id){
+        return currencyService.getCurrency(id);
     }
-
 }

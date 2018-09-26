@@ -16,19 +16,25 @@ public class CartController {
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
     @ResponseBody
-    public ObjectNode cart(){
+    public ObjectNode getCart(){
         return cartService.getCart();
     }
 
-    @RequestMapping(value="/cart/stuff/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/cart/{id}", method=RequestMethod.DELETE)
     @ResponseBody
-    public String deleteStuff(@PathVariable("id") int id){
-        return cartService.deleteStuffFromCart(id);
+    public String deleteItem(@PathVariable("id") int id){
+        return cartService.deleteItemFromCart(id);
     }
 
-    @RequestMapping(value = "/cart/stuff/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/cart/item/{id}", method = RequestMethod.PUT)
     @ResponseBody
-    public String putStuff(@PathVariable("id") int id){
-        return cartService.putStuffToCart(id);
+    public String putItem(@PathVariable("id") int id){
+        return cartService.putItemToCart(id);
+    }
+
+    @RequestMapping(value = "/cart/payment", method = RequestMethod.POST)
+    @ResponseBody
+    public String pay() {
+        return cartService.paymentOfCart();
     }
 }
