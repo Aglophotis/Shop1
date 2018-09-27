@@ -1,4 +1,5 @@
-package ru.mirea.data;
+package ru.mirea.data.controllers;
+
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,22 +8,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import ru.mirea.data.services.StuffService;
 
 @Controller
-public class CurrencyController {
+public class StuffController {
 
     @Autowired
-    private CurrencyService currencyService;
+    private StuffService stuffService;
 
-    @RequestMapping(value = "/currency", method = RequestMethod.GET)
+    @RequestMapping(value = "/stuff", method = RequestMethod.GET)
     @ResponseBody
-    public ObjectNode getCurrencies(){
-        return currencyService.getCurrencies();
+    public ObjectNode getStuffs(){
+        return stuffService.getStuffs();
     }
 
-    @RequestMapping(value="/currency/{id}", method=RequestMethod.GET)
+    @RequestMapping(value="/stuff/{id}", method=RequestMethod.GET)
     @ResponseBody
-    public ObjectNode getCurrency(@PathVariable("id") int id){
-        return currencyService.getCurrency(id);
+    public ObjectNode getStuff(@PathVariable("id") int id){
+        return stuffService.getStuff(id);
     }
+
 }
