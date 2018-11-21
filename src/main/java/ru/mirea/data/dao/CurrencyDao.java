@@ -34,7 +34,8 @@ public class CurrencyDao {
         try (PreparedStatement pstmt  = sqlHelper.getConnection().prepareStatement(sql)){
             pstmt.setInt(1, id);
             ResultSet rs  = pstmt.executeQuery();
-            return createCurrenciesList(rs).get(0);
+            List<Currency> list = createCurrenciesList(rs);
+            return list.size() == 0 ? null : list.get(0);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

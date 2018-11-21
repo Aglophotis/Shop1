@@ -5,7 +5,7 @@ public class CartItem {
     private int idAuthor;
     private int idItem;
 
-    public CartItem(int id, int idAuthor, int idItem){
+    public CartItem(int id, int idItem, int idAuthor){
         this.id = id;
         this.idAuthor = idAuthor;
         this.idItem = idItem;

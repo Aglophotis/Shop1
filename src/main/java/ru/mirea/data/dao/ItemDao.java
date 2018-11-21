@@ -62,7 +62,7 @@ public class ItemDao {
             pstmt.setInt(1, arg);
             ResultSet rs  = pstmt.executeQuery();
             List<Item> list = createItemsList(rs);
-            return list == null ? null : list.get(0);
+            return list.size() == 0 ? null : list.get(0);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

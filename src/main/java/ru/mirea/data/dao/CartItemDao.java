@@ -19,13 +19,29 @@ public class CartItemDao {
 
     public List<CartItem> getAllCartItems() {
         String sql = "SELECT * FROM cart WHERE id_author = '1'";
-        try (PreparedStatement pstmt = sqlHelper.getConnection().prepareStatement(sql)) {
-            ResultSet rs = pstmt.executeQuery();
-            return createCartItemsList(rs, 1);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        return executeSql(sql);
+    }
+
+    public List<CartItem> getDistinctCartItems() {
+        String sql = "SELECT DISTINCT * FROM cart WHERE id_author = '1'";
+        List<CartItem> list = executeSql(sql);
+        if (list == null) {
             return null;
         }
+        ArrayList<CartItem> resultList = new ArrayList<>();
+        for (CartItem cartItem : list) {
+            boolean isContains = false;
+            for (int i = 0; i < resultList.size(); i++) {
+                if (resultList.get(i).getIdItem() == cartItem.getIdItem()) {
+                    isContains = true;
+                    break;
+                }
+            }
+            if (!isContains) {
+                resultList.add(cartItem);
+            }
+        }
+        return resultList;
     }
 
     public void clearCart() {
@@ -41,7 +57,7 @@ public class CartItemDao {
         String sql = "SELECT count(*) FROM cart WHERE id_item = ?";
         try (PreparedStatement pstmt = sqlHelper.getConnection().prepareStatement(sql)) {
             pstmt.setInt(1, id);
-            ResultSet rs = pstmt.executeQuery(sql);
+            ResultSet rs = pstmt.executeQuery();
             return rs.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,6 +82,16 @@ public class CartItemDao {
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;
+        }
+    }
+
+    private List<CartItem> executeSql(String sql) {
+        try (PreparedStatement pstmt = sqlHelper.getConnection().prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            return createCartItemsList(rs, 1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

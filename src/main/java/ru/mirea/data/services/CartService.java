@@ -33,7 +33,7 @@ public class CartService {
 
     public String deleteItemFromCart(int id){
         int err = cartItemDao.deleteFromCartById(id);
-        if (err == -1){
+        if (err == 0){
             return "Error: stuff wasn't found in cart";
         } else {
             return "The stuff was successfully removed from cart";
@@ -41,9 +41,14 @@ public class CartService {
     }
 
     public String putItemToCart(int id){
-        int nCountInItems = itemDao.getItemById(id).getCount();
-        if (nCountInItems == -1) return "Error: id wasn't found";
-        if (nCountInItems == 0) return "The stuffs are over";
+        Item item = itemDao.getItemById(id);
+        if (item == null) {
+            return "Error: id wasn't found";
+        }
+        int nCountInItems = item.getCount();
+        if (nCountInItems == 0) {
+            return "The stuffs are over";
+        }
         int nCountInCart = cartItemDao.getItemsCountInCart(id);
         if (nCountInCart < nCountInItems){
             if (cartItemDao.insertIntoCart(id) == -1) {
@@ -56,7 +61,7 @@ public class CartService {
     }
 
     public String paymentOfCart(){
-        List<CartItem> cartItems = cartItemDao.getAllCartItems();
+        List<CartItem> cartItems = cartItemDao.getDistinctCartItems();
         int paymentAmount = 0;
         if (cartItems.isEmpty()){
             return "Error: cart is empty";
@@ -68,6 +73,7 @@ public class CartService {
             if (nCountInCart > nCountInStuffs) {
                 return "Error: the quantity of the items has been changed.";
             }
+            System.out.println(item.getPrice());
             paymentAmount += nCountInCart * item.getPrice();
         }
 
@@ -77,6 +83,7 @@ public class CartService {
             balance += balanceDao.getBalanceByCurrencyId(currency.getId()).getBalance() * currency.getExchangeRate();
         }
 
+        System.out.println(paymentAmount + " " + balance);
         if (balance < paymentAmount){
             return "You don't have enough money";
         }
