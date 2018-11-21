@@ -1,51 +1,58 @@
 package ru.mirea.data.services;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.mirea.data.SQLHelper;
+import ru.mirea.data.entities.Balance;
+import ru.mirea.data.entities.Currency;
+import ru.mirea.data.dao.BalanceDao;
+import ru.mirea.data.dao.CurrencyDao;
+
+import java.util.List;
 
 @Service
 public class BalanceService {
 
     @Autowired
-    private SQLHelper sqlHelper;
+    private CurrencyDao currencyDao;
 
-    public ObjectNode getBalance() {
-        return sqlHelper.selectAllFromBalance(1);
+    @Autowired
+    private BalanceDao balanceDao;
+
+    public List<Balance> getBalance() {
+        return balanceDao.getBalances();
     }
 
     public String increaseBalance(int id_currency, double value) {
-        double exchangeRate = sqlHelper.selectColumnValueById("exchange_rate", "currency", id_currency);
-        if (exchangeRate == -1) {
+        Currency currency = currencyDao.getCurrencyById(id_currency);
+        if (currency == null) {
             return "Error: connection problems";
         }
-        double currentBalance = sqlHelper.selectBalanceByCurrencyID(id_currency, 1);
-        if (currentBalance == -1) {
+        Balance balance = balanceDao.getBalanceByCurrencyId(id_currency);
+        if (balance == null) {
             return "Error: connection problems";
         }
-        if (sqlHelper.updateBalanceByCurrencyID(id_currency, 1, currentBalance + value) == -1) {
+        if (balanceDao.updateBalanceByCurrencyID(id_currency, balance.getBalance() + value) == -1) {
             return "Error: connection problems";
         }
         return "Balance successfully updated";
     }
 
     public String decreaseBalance(int id_currency, double value) {
-        double exchangeRate = sqlHelper.selectColumnValueById("exchange_rate", "currency", id_currency);
-        if (exchangeRate == -1) {
+        Currency currency = currencyDao.getCurrencyById(id_currency);
+        if (currency == null) {
             return "Error: connection problems";
         }
-        double currentBalance = sqlHelper.selectBalanceByCurrencyID(id_currency, 1);
-        if (currentBalance == -1) {
+        Balance balance = balanceDao.getBalanceByCurrencyId(id_currency);
+        if (balance == null) {
             return "Error: connection problems";
         }
-        if (currentBalance == 0){
+        if (balance.getBalance() == 0){
             return "Your balance is zero";
         }
-        if (currentBalance < value){
+        if (balance.getBalance() < value){
             return "Error: your balance is below the amount withdrawn";
         }
-        if (sqlHelper.updateBalanceByCurrencyID(id_currency, 1, currentBalance - value) == -1) {
+        if (balanceDao.updateBalanceByCurrencyID(id_currency, balance.getBalance() - value) == -1) {
             return "Error: connection problems";
         }
         return "Balance successfully updated";

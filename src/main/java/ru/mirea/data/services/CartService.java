@@ -1,41 +1,54 @@
 package ru.mirea.data.services;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.mirea.data.SQLHelper;
+import ru.mirea.data.dao.BalanceDao;
+import ru.mirea.data.dao.CartItemDao;
+import ru.mirea.data.dao.CurrencyDao;
+import ru.mirea.data.dao.ItemDao;
+import ru.mirea.data.entities.CartItem;
+import ru.mirea.data.entities.Currency;
+import ru.mirea.data.entities.Item;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CartService {
 
     @Autowired
-    private SQLHelper sqlHelper;
+    private CartItemDao cartItemDao;
 
-    public ObjectNode getCart(){
-        return sqlHelper.selectAllFromCart(1);
+    @Autowired
+    private ItemDao itemDao;
+
+    @Autowired
+    private BalanceDao balanceDao;
+
+    @Autowired
+    private CurrencyDao currencyDao;
+
+    public List<CartItem> getCart(){
+        return cartItemDao.getAllCartItems();
     }
 
     public String deleteItemFromCart(int id){
-        int err = sqlHelper.deleteFromTableByIDAndAuthorID("cart", id, 1);
+        int err = cartItemDao.deleteFromCartById(id);
         if (err == -1){
-            return "Error: connection problem";
-        } else if (err == 1){
-            return "The stuff was successfully removed from cart";
-        } else {
             return "Error: stuff wasn't found in cart";
+        } else {
+            return "The stuff was successfully removed from cart";
         }
     }
 
     public String putItemToCart(int id){
-        int nCountInStuffs = sqlHelper.selectColumnValueById("count", "items", id);
-        if (nCountInStuffs == -1) return "Error: id wasn't found";
-        if (nCountInStuffs == 0) return "The stuffs are over";
-        int nCountInCart = sqlHelper.getCountOfRowsFromCart(id);
-        if (nCountInCart < nCountInStuffs){
-            if (sqlHelper.insertIntoCart(id, 1) == -1)
+        int nCountInItems = itemDao.getItemById(id).getCount();
+        if (nCountInItems == -1) return "Error: id wasn't found";
+        if (nCountInItems == 0) return "The stuffs are over";
+        int nCountInCart = cartItemDao.getItemsCountInCart(id);
+        if (nCountInCart < nCountInItems){
+            if (cartItemDao.insertIntoCart(id) == -1) {
                 return "Error: connection problems";
+            }
         } else {
             return "The stuffs are over";
         }
@@ -43,53 +56,56 @@ public class CartService {
     }
 
     public String paymentOfCart(){
-        ArrayList<Integer> uniqItemId = sqlHelper.selectDistinctColumnValues("id_item", "cart");
+        List<CartItem> cartItems = cartItemDao.getAllCartItems();
         int paymentAmount = 0;
-        if (uniqItemId.isEmpty()){
+        if (cartItems.isEmpty()){
             return "Error: cart is empty";
         }
-        for (int id : uniqItemId) {
-            int nCountInStuffs = sqlHelper.selectColumnValueById("count","items", id);
-            int nCountInCart = sqlHelper.getCountOfRowsFromCart(id);
+        for (CartItem cartItem : cartItems) {
+            Item item = itemDao.getItemById(cartItem.getIdItem());
+            int nCountInStuffs = item.getCount();
+            int nCountInCart = cartItemDao.getItemsCountInCart(cartItem.getIdItem());
             if (nCountInCart > nCountInStuffs) {
-                return "Error: the quantity of the stuffs(" + id + ") has been changed.";
+                return "Error: the quantity of the items has been changed.";
             }
-            paymentAmount += nCountInCart * sqlHelper.selectColumnValueById("price", "items", id);
+            paymentAmount += nCountInCart * item.getPrice();
         }
 
         double balance = 0;
-        for (int idCurrency : sqlHelper.selectDistinctColumnValues("id", "currency")){
-            double exchangeRate = sqlHelper.selectColumnValueById("exchange_rate", "currency", idCurrency);
-            balance += sqlHelper.selectBalanceByCurrencyID(idCurrency, 1)*exchangeRate;
+        List<Currency> currencies = currencyDao.getAllCurrencies();
+        for (Currency currency : currencies){
+            balance += balanceDao.getBalanceByCurrencyId(currency.getId()).getBalance() * currency.getExchangeRate();
         }
 
         if (balance < paymentAmount){
             return "You don't have enough money";
         }
 
-        for (int idCurrency : sqlHelper.selectDistinctColumnValues("id", "currency")) {
-            double exchangeRate = sqlHelper.selectColumnValueById("exchange_rate", "currency", idCurrency);
-            double currencyBalance = sqlHelper.selectBalanceByCurrencyID(idCurrency, 1)*exchangeRate;
+        for (Currency currency : currencies) {
+            double exchangeRate = currency.getExchangeRate();
+            double currencyBalance = balanceDao.getBalanceByCurrencyId(currency.getId()).getBalance() * exchangeRate;
             if (currencyBalance >= paymentAmount) {
-                sqlHelper.updateBalanceByCurrencyID(idCurrency, 1, (currencyBalance-paymentAmount)/exchangeRate);
-                paymentAmount = 0;
+                balanceDao.updateBalanceByCurrencyID(currency.getId(),
+                        (currencyBalance-paymentAmount)/exchangeRate);
                 break;
             } else {
-                sqlHelper.updateBalanceByCurrencyID(idCurrency, 1, 0);
+                balanceDao.updateBalanceByCurrencyID(currency.getId(), 0);
                 paymentAmount -= currencyBalance;
             }
         }
 
-        for (int id : uniqItemId) {
-            int nCountInStuffs = sqlHelper.selectColumnValueById("count","items", id);
-            int nCountInCart = sqlHelper.getCountOfRowsFromCart(id);
-            if (nCountInCart <= nCountInStuffs) {
-                if (sqlHelper.updateColumnValueByID("items", "count", nCountInStuffs - nCountInCart, id) == -1){
+        for (CartItem cartItem : cartItems) {
+            Item item = itemDao.getItemById(cartItem.getIdItem());
+            int nCountInItems = item.getCount();
+            int nCountInCart = cartItemDao.getItemsCountInCart(cartItem.getIdItem());
+            if (nCountInCart <= nCountInItems) {
+                item.setCount(nCountInItems - nCountInCart);
+                if (itemDao.updateItem(item) == -1){
                     return "Error: connection problem";
                 }
             }
         }
-        sqlHelper.clearTable("cart");
+        cartItemDao.clearCart();
         return "The payment has been successfully completed";
     }
 }

@@ -1,32 +1,25 @@
 package ru.mirea.data.services;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.mirea.data.SQLHelper;
+import ru.mirea.data.entities.Item;
+import ru.mirea.data.dao.ItemDao;
+
+import java.util.List;
 
 @Service
 public class StuffService {
 
     @Autowired
-    private SQLHelper sqlHelper;
+    private ItemDao itemDao;
 
-    public ObjectNode getStuffs(){
-        return sqlHelper.selectAllFromItems("Stuff");
+    public List<Item> getStuffs(){
+        return itemDao.getAllStuffs();
     }
 
-    public ObjectNode getStuff(int id){
-        return sqlHelper.selectConcreteFromItemsById("Stuff", id);
+    public Item getStuff(int id){
+        return itemDao.getStuffById(id);
     }
 
 
-    public void openConnectionToDB(){
-        if (!sqlHelper.connectionIsRun())
-            sqlHelper.run();
-    }
-
-    public void closeConnectionToDB(){
-        if (sqlHelper.connectionIsRun())
-            sqlHelper.stop();
-    }
 }
