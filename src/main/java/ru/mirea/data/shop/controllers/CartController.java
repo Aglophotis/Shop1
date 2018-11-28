@@ -1,4 +1,4 @@
-package ru.mirea.data.controllers;
+package ru.mirea.data.shop.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.mirea.data.entities.CartItem;
-import ru.mirea.data.services.CartService;
+import ru.mirea.data.shop.entities.CartItem;
+import ru.mirea.data.shop.services.CartService;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ru.mirea.data.entities;
+package ru.mirea.data.shop.entities;
 
 public class Item {
     private int id;

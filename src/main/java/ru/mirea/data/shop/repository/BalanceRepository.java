@@ -1,9 +1,10 @@
-package ru.mirea.data.dao;
+package ru.mirea.data.shop.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.mirea.data.data.SqlHelper;
-import ru.mirea.data.entities.Balance;
+import ru.mirea.data.shop.data.SqlHelper;
+import ru.mirea.data.shop.entities.Balance;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class BalanceDao {
+public class BalanceRepository {
 
     @Autowired
     SqlHelper sqlHelper;
@@ -45,7 +46,7 @@ public class BalanceDao {
             pstmt.setInt(1, id);
             ResultSet rs  = pstmt.executeQuery();
             return createBalancesList(rs).get(0);
-        } catch (SQLException e) {
+        } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
             return null;
         }

@@ -1,11 +1,11 @@
-package ru.mirea.data.data;
+package ru.mirea.data.shop.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.mirea.data.dao.BalanceDao;
-import ru.mirea.data.dao.CurrencyDao;
-import ru.mirea.data.dao.ItemDao;
-import ru.mirea.data.entities.Currency;
+import ru.mirea.data.shop.entities.Currency;
+import ru.mirea.data.shop.repository.BalanceRepository;
+import ru.mirea.data.shop.repository.CurrencyRepository;
+import ru.mirea.data.shop.repository.ItemRepository;
 
 import javax.annotation.PostConstruct;
 import java.sql.PreparedStatement;
@@ -21,13 +21,13 @@ public class SqlInit {
     SqlHelper sqlHelper;
 
     @Autowired
-    BalanceDao balanceDao;
+    BalanceRepository balanceRepository;
 
     @Autowired
-    ItemDao itemDao;
+    ItemRepository itemRepository;
 
     @Autowired
-    CurrencyDao currencyDao;
+    CurrencyRepository currencyRepository;
 
     @PostConstruct
     private void init() {
@@ -36,25 +36,25 @@ public class SqlInit {
         }
         createTableOfCart();
         createTableOfItems();
-        itemDao.insertIntoItems("Dog-collar", "Stuff", 200, 1);
-        itemDao.insertIntoItems("Ball", "Stuff", 100, 4);
-        itemDao.insertIntoItems("Cat", "Pet", 5299, 1);
-        itemDao.insertIntoItems("Milk", "Stuff", 150, 20);
-        itemDao.insertIntoItems("Rabbit", "Pet", 1000, 100);
-        itemDao.insertIntoItems("Food", "Stuff", 300, 2);
-        itemDao.insertIntoItems("Dog", "Pet", 3200, 5);
+        itemRepository.insertIntoItems("Dog-collar", "Stuff", 200, 1);
+        itemRepository.insertIntoItems("Ball", "Stuff", 100, 4);
+        itemRepository.insertIntoItems("Cat", "Pet", 5299, 1);
+        itemRepository.insertIntoItems("Milk", "Stuff", 150, 20);
+        itemRepository.insertIntoItems("Rabbit", "Pet", 1000, 100);
+        itemRepository.insertIntoItems("Food", "Stuff", 300, 2);
+        itemRepository.insertIntoItems("Dog", "Pet", 3200, 5);
         createTableCurrency();
-        currencyDao.insertIntoCurrency("Ruble", 1);
-        currencyDao.insertIntoCurrency("Dollar", 63.4d);
-        currencyDao.insertIntoCurrency("Euro", 74.9d);
+        currencyRepository.insertIntoCurrency("Ruble", 1);
+        currencyRepository.insertIntoCurrency("Dollar", 63.4d);
+        currencyRepository.insertIntoCurrency("Euro", 74.9d);
         createTableOfBalance();
         createBalanceForUser(1);
     }
 
     private int createBalanceForUser(int idAuthor) {
-        List<Currency> list = currencyDao.getAllCurrencies();
+        List<Currency> list = currencyRepository.getAllCurrencies();
         for (Currency currency : list) {
-            if (balanceDao.insertIntoBalance(idAuthor, currency.getId(), 0d) == -1)
+            if (balanceRepository.insertIntoBalance(idAuthor, currency.getId(), 0d) == -1)
                 return -1;
         }
         return 1;

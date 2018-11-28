@@ -1,4 +1,4 @@
-package ru.mirea.data.controllers;
+package ru.mirea.data.shop.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.mirea.data.entities.Currency;
-import ru.mirea.data.services.CurrencyService;
+import ru.mirea.data.shop.entities.Currency;
+import ru.mirea.data.shop.services.CurrencyService;
 
 import java.util.List;
 

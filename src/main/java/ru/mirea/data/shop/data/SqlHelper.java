@@ -1,17 +1,11 @@
-package ru.mirea.data.data;
+package ru.mirea.data.shop.data;
 
 import org.springframework.stereotype.Component;
-import ru.mirea.data.entities.Balance;
-import ru.mirea.data.entities.CartItem;
-import ru.mirea.data.entities.Currency;
-import ru.mirea.data.entities.Item;
 
 import javax.annotation.PostConstruct;
-import java.sql.*;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 @Component
 public class SqlHelper {
@@ -29,7 +23,7 @@ public class SqlHelper {
             e.printStackTrace();
             return;
         }
-        Connection connection = null;
+        Connection connection;
         try {
             connection = DriverManager.getConnection(connectionString);
             System.out.println("Connection has been established");
@@ -58,7 +52,6 @@ public class SqlHelper {
         } catch (SQLException e) {
             System.out.println("Can't close connection");
             e.printStackTrace();
-            return;
         }
     }
 }

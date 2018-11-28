@@ -1,14 +1,14 @@
-package ru.mirea.data.services;
+package ru.mirea.data.shop.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.mirea.data.dao.BalanceDao;
-import ru.mirea.data.dao.CartItemDao;
-import ru.mirea.data.dao.CurrencyDao;
-import ru.mirea.data.dao.ItemDao;
-import ru.mirea.data.entities.CartItem;
-import ru.mirea.data.entities.Currency;
-import ru.mirea.data.entities.Item;
+import ru.mirea.data.shop.entities.CartItem;
+import ru.mirea.data.shop.entities.Currency;
+import ru.mirea.data.shop.entities.Item;
+import ru.mirea.data.shop.repository.BalanceRepository;
+import ru.mirea.data.shop.repository.CartItemRepository;
+import ru.mirea.data.shop.repository.CurrencyRepository;
+import ru.mirea.data.shop.repository.ItemRepository;
 
 import java.util.List;
 
@@ -16,23 +16,23 @@ import java.util.List;
 public class CartService {
 
     @Autowired
-    private CartItemDao cartItemDao;
+    private CartItemRepository cartItemRepository;
 
     @Autowired
-    private ItemDao itemDao;
+    private ItemRepository itemRepository;
 
     @Autowired
-    private BalanceDao balanceDao;
+    private BalanceRepository balanceRepository;
 
     @Autowired
-    private CurrencyDao currencyDao;
+    private CurrencyRepository currencyRepository;
 
     public List<CartItem> getCart(){
-        return cartItemDao.getAllCartItems();
+        return cartItemRepository.getAllCartItems();
     }
 
     public String deleteItemFromCart(int id){
-        int err = cartItemDao.deleteFromCartById(id);
+        int err = cartItemRepository.deleteFromCartById(id);
         if (err == 0){
             return "Error: stuff wasn't found in cart";
         } else {
@@ -41,7 +41,7 @@ public class CartService {
     }
 
     public String putItemToCart(int id){
-        Item item = itemDao.getItemById(id);
+        Item item = itemRepository.getItemById(id);
         if (item == null) {
             return "Error: id wasn't found";
         }
@@ -49,9 +49,9 @@ public class CartService {
         if (nCountInItems == 0) {
             return "The stuffs are over";
         }
-        int nCountInCart = cartItemDao.getItemsCountInCart(id);
+        int nCountInCart = cartItemRepository.getItemsCountInCart(id);
         if (nCountInCart < nCountInItems){
-            if (cartItemDao.insertIntoCart(id) == -1) {
+            if (cartItemRepository.insertIntoCart(id) == -1) {
                 return "Error: connection problems";
             }
         } else {
@@ -61,15 +61,15 @@ public class CartService {
     }
 
     public String paymentOfCart(){
-        List<CartItem> cartItems = cartItemDao.getDistinctCartItems();
+        List<CartItem> cartItems = cartItemRepository.getDistinctCartItems();
         int paymentAmount = 0;
         if (cartItems.isEmpty()){
             return "Error: cart is empty";
         }
         for (CartItem cartItem : cartItems) {
-            Item item = itemDao.getItemById(cartItem.getIdItem());
+            Item item = itemRepository.getItemById(cartItem.getIdItem());
             int nCountInStuffs = item.getCount();
-            int nCountInCart = cartItemDao.getItemsCountInCart(cartItem.getIdItem());
+            int nCountInCart = cartItemRepository.getItemsCountInCart(cartItem.getIdItem());
             if (nCountInCart > nCountInStuffs) {
                 return "Error: the quantity of the items has been changed.";
             }
@@ -78,9 +78,9 @@ public class CartService {
         }
 
         double balance = 0;
-        List<Currency> currencies = currencyDao.getAllCurrencies();
+        List<Currency> currencies = currencyRepository.getAllCurrencies();
         for (Currency currency : currencies){
-            balance += balanceDao.getBalanceByCurrencyId(currency.getId()).getBalance() * currency.getExchangeRate();
+            balance += balanceRepository.getBalanceByCurrencyId(currency.getId()).getBalance() * currency.getExchangeRate();
         }
 
         System.out.println(paymentAmount + " " + balance);
@@ -90,29 +90,29 @@ public class CartService {
 
         for (Currency currency : currencies) {
             double exchangeRate = currency.getExchangeRate();
-            double currencyBalance = balanceDao.getBalanceByCurrencyId(currency.getId()).getBalance() * exchangeRate;
+            double currencyBalance = balanceRepository.getBalanceByCurrencyId(currency.getId()).getBalance() * exchangeRate;
             if (currencyBalance >= paymentAmount) {
-                balanceDao.updateBalanceByCurrencyID(currency.getId(),
+                balanceRepository.updateBalanceByCurrencyID(currency.getId(),
                         (currencyBalance-paymentAmount)/exchangeRate);
                 break;
             } else {
-                balanceDao.updateBalanceByCurrencyID(currency.getId(), 0);
+                balanceRepository.updateBalanceByCurrencyID(currency.getId(), 0);
                 paymentAmount -= currencyBalance;
             }
         }
 
         for (CartItem cartItem : cartItems) {
-            Item item = itemDao.getItemById(cartItem.getIdItem());
+            Item item = itemRepository.getItemById(cartItem.getIdItem());
             int nCountInItems = item.getCount();
-            int nCountInCart = cartItemDao.getItemsCountInCart(cartItem.getIdItem());
+            int nCountInCart = cartItemRepository.getItemsCountInCart(cartItem.getIdItem());
             if (nCountInCart <= nCountInItems) {
                 item.setCount(nCountInItems - nCountInCart);
-                if (itemDao.updateItem(item) == -1){
+                if (itemRepository.updateItem(item) == -1) {
                     return "Error: connection problem";
                 }
             }
         }
-        cartItemDao.clearCart();
+        cartItemRepository.clearCart();
         return "The payment has been successfully completed";
     }
 }

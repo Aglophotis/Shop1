@@ -20,7 +20,7 @@
             <artifactId>spring-boot-maven-plugin</artifactId>
             <configuration>
                 <fork>true</fork>
-                <mainClass>ru.mirea.data.SpringServer</mainClass>
+                <mainClass>ru.mirea.data.shop.SpringApplication</mainClass>
             </configuration>
             <executions>
                 <execution>

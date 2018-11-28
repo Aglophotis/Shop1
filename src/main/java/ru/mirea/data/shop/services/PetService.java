@@ -1,9 +1,9 @@
-package ru.mirea.data.services;
+package ru.mirea.data.shop.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.mirea.data.entities.Item;
-import ru.mirea.data.dao.ItemDao;
+import ru.mirea.data.shop.entities.Item;
+import ru.mirea.data.shop.repository.ItemRepository;
 
 import java.util.List;
 
@@ -11,14 +11,14 @@ import java.util.List;
 public class PetService {
 
     @Autowired
-    private ItemDao itemDao;
+    private ItemRepository itemRepository;
 
     public List<Item> getPets(){
-        return itemDao.getAllPets();
+        return itemRepository.getAllPets();
     }
 
     public Item getPet(int id){
-        return itemDao.getPetById(id);
+        return itemRepository.getPetById(id);
     }
 
 }

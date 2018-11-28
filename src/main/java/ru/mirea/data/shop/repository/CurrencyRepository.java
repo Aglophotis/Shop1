@@ -1,9 +1,9 @@
-package ru.mirea.data.dao;
+package ru.mirea.data.shop.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.mirea.data.data.SqlHelper;
-import ru.mirea.data.entities.Currency;
+import ru.mirea.data.shop.data.SqlHelper;
+import ru.mirea.data.shop.entities.Currency;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CurrencyDao {
+public class CurrencyRepository {
 
     @Autowired
     SqlHelper sqlHelper;
@@ -36,7 +36,7 @@ public class CurrencyDao {
             ResultSet rs  = pstmt.executeQuery();
             List<Currency> list = createCurrenciesList(rs);
             return list.size() == 0 ? null : list.get(0);
-        } catch (SQLException e) {
+        } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
             return null;
         }

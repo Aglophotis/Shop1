@@ -1,11 +1,11 @@
-package ru.mirea.data.services;
+package ru.mirea.data.shop.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.mirea.data.entities.Balance;
-import ru.mirea.data.entities.Currency;
-import ru.mirea.data.dao.BalanceDao;
-import ru.mirea.data.dao.CurrencyDao;
+import ru.mirea.data.shop.entities.Balance;
+import ru.mirea.data.shop.entities.Currency;
+import ru.mirea.data.shop.repository.BalanceRepository;
+import ru.mirea.data.shop.repository.CurrencyRepository;
 
 import java.util.List;
 
@@ -13,36 +13,36 @@ import java.util.List;
 public class BalanceService {
 
     @Autowired
-    private CurrencyDao currencyDao;
+    private CurrencyRepository currencyRepository;
 
     @Autowired
-    private BalanceDao balanceDao;
+    private BalanceRepository balanceRepository;
 
     public List<Balance> getBalance() {
-        return balanceDao.getBalances();
+        return balanceRepository.getBalances();
     }
 
     public String increaseBalance(int id_currency, double value) {
-        Currency currency = currencyDao.getCurrencyById(id_currency);
+        Currency currency = currencyRepository.getCurrencyById(id_currency);
         if (currency == null) {
             return "Error: connection problems";
         }
-        Balance balance = balanceDao.getBalanceByCurrencyId(id_currency);
+        Balance balance = balanceRepository.getBalanceByCurrencyId(id_currency);
         if (balance == null) {
             return "Error: connection problems";
         }
-        if (balanceDao.updateBalanceByCurrencyID(id_currency, balance.getBalance() + value) == -1) {
+        if (balanceRepository.updateBalanceByCurrencyID(id_currency, balance.getBalance() + value) == -1) {
             return "Error: connection problems";
         }
         return "Balance successfully updated";
     }
 
     public String decreaseBalance(int id_currency, double value) {
-        Currency currency = currencyDao.getCurrencyById(id_currency);
+        Currency currency = currencyRepository.getCurrencyById(id_currency);
         if (currency == null) {
             return "Error: connection problems";
         }
-        Balance balance = balanceDao.getBalanceByCurrencyId(id_currency);
+        Balance balance = balanceRepository.getBalanceByCurrencyId(id_currency);
         if (balance == null) {
             return "Error: connection problems";
         }
@@ -52,7 +52,7 @@ public class BalanceService {
         if (balance.getBalance() < value){
             return "Error: your balance is below the amount withdrawn";
         }
-        if (balanceDao.updateBalanceByCurrencyID(id_currency, balance.getBalance() - value) == -1) {
+        if (balanceRepository.updateBalanceByCurrencyID(id_currency, balance.getBalance() - value) == -1) {
             return "Error: connection problems";
         }
         return "Balance successfully updated";
